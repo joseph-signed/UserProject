@@ -1,0 +1,115 @@
+﻿@model ApplicantProject.Models.UserModel
+
+<h3>User Page</h3>
+<br />
+
+@using (Html.BeginForm("Index", "User", FormMethod.Post, new { @id = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(model => model.RegisterDate)
+
+    @Html.HiddenFor(model => model.FullName)
+    <table>
+        <thead>
+            <tr>
+                <th style="width:max-content">
+
+                </th>
+                <th>
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.ID)
+                </td>
+                <td>
+                    @Html.EditorFor(model => model.ID, new { htmlAttributes = new { @class = "format" } })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.FirstName)
+                </td>
+                <td>
+                    @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "format" } })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.LastName)
+                </td>
+                <td>
+                    @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "format" } })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.Age)
+                </td>
+                <td>
+                    @Html.EditorFor(model => model.Age, new { htmlAttributes = new { @class = "format" } })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.RegisterDateString)
+                </td>
+                <td>
+                    @Html.EditorFor(model => model.RegisterDateString, new { htmlAttributes = new { @class = "format" } })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input style="display:inline" type="submit" value="Submit" />
+                    <input style="display:inline" type="submit" id="ajaxSubmit" value="Ajax Submit" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+}
+
+@if (Model != null && Model.FullName != null)
+{
+    <span>Full Name: @Model.FullName</span>
+}
+
+<!------------STYLES AND SCRIPTS------------>
+@section Styles
+    {
+    <style type="text/css">
+        .format {
+            margin-left: 30px;
+            width: 200px;
+        }
+    </style>
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        //  Make the Ajax Submit button call the Test function using JQuery's $.ajax
+        //      1. Should pass the first name and last name values that were entered into the textboxes to the function
+        //      2. On success it should pop up an alert with whatever you made the Test function return.
+
+        $('#ajaxSubmit').click(function () {
+            var valdata = $('#form').serialize();
+            $.ajax({
+                url: "/User/JsonIndex",
+                type: "POST",
+                dataType: 'json',
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                data: valdata,
+                success: function(data) {
+                    alert(data.result + " " + "(AJAX)");
+                }
+            });
+        });
+
+    });
+</script>
+<!--------END STYLES AND SCRIPTS------------>

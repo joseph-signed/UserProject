@@ -1,0 +1,28 @@
+Simple Web Page
+---------------
+
+1. Install VS if necessary
+2. Create a new project
+	a. Filter language on C#
+	b. Select ASP.NET Web Application (.NET Framework)
+	c. Choose MVC as the project template
+3. Add a new Model class called UserModel to the Models folder
+	a. Add the following properties to the UserModel class
+		ID (int)
+		FirstName (string)
+		LastName (string)
+		Age (byte)
+		RegisterDate (DateTime)
+4. Add a new Controller class called UserController to the Controllers folder
+	a. Make the default Index function create a new UserModel object and pass it to the view.
+	b. Make another Index function that accepts a UserModel object and passes that to the view. It will also need the HttpPost attribute.
+	c. Make a Test function that accepts a first name and a last name and returns a string containing the passed in values.
+5. Add a view called Index to the Views/User folder
+	a. Set the view's model to the UserModel
+	b. Include this on the page: <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	c. Make the page look like the attached screenshot
+	d. Use Html.BeginForm to make the submit button call the Index(UserModel) function
+		-It should end up calling that function and populating the text boxes with the values entered
+	e. Make the Ajax Submit button call the Test function using JQuery's $.ajax
+		1. Should pass the first name and last name values that were entered into the textboxes to the function
+		2. On success it should pop up an alert with whatever you made the Test function return.
